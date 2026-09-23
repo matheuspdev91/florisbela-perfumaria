@@ -1,19 +1,23 @@
+=
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Florisbela Perfumaria — fragrâncias que transformam presença em memória.">
-    <meta name="theme-color" content="#080604">
-    <title>Florisbela — Perfumaria</title>
+    <meta name="theme-color" content="#080706">
+
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="preload" as="image" href="assets/logo-florisbela.png">
+    <link rel="preload" as="video" href="assets/florisbela-hero.mp4" type="video/mp4">
+
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -33,162 +37,173 @@
     </header>
 
     <main>
+
+        <!-- HERO -->
         <section class="hero" aria-label="Florisbela Perfumaria">
-            <video class="hero-video" autoplay muted loop playsinline preload="auto"
-                poster="assets/florisbela-hero-poster.jpg">
-                <source src="assets/florisbela-hero.mp4" type="video/mp4">
-                Seu navegador não conseguiu carregar o vídeo.
-            </video>
+            <div class="hero-media">
+                <video autoplay muted loop playsinline preload="auto" poster="assets/florisbela-hero-poster.jpg">
+                    <source src="assets/florisbela-hero.mp4" type="video/mp4">
+                </video>
+            </div>
 
-            <div class="hero-overlay" aria-hidden="true"></div>
-            <div class="hero-vignette" aria-hidden="true"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-vignette"></div>
 
-            <div class="hero-content">
-                <p class="eyebrow">FLORISBELA · PERFUMARIA</p>
-                <h1>Sua essência.<br><em>Sua identidade.</em></h1>
-                <p class="hero-text">Fragrâncias escolhidas para transformar presença em memória.</p>
+            <div class="hero-center">
+                <h1>Sua <em>essência.</em><br>Sua <em>identidade.</em></h1>
+
+                <p class="hero-lead">
+                    Fragrâncias escolhidas para transformar<br class="desktop-only">
+                    presença em memória.
+                </p>
 
                 <div class="hero-actions">
                     <a href="#colecao" class="button button-gold">Descobrir fragrâncias <span>↗</span></a>
-                    <a href="#essencia" class="text-link">Conheça a Florisbela <span>↓</span></a>
+                    <a href="#essencia" class="button button-ghost">Conheça a Florisbela <span>↓</span></a>
                 </div>
             </div>
 
-            <div class="hero-meta" aria-hidden="true">
-                <span>01</span><span class="hero-line"></span><span>ESSÊNCIA</span>
+            <div class="hero-scroll">
+                <span>SCROLL</span>
+                <i></i>
             </div>
         </section>
 
+        <!-- ESSÊNCIA -->
         <section class="intro section" id="essencia">
-            <div class="intro-label">
-                <span class="eyebrow">A EXPERIÊNCIA FLORISBELA</span>
-                <span class="section-number">02</span>
+            <div class="section-marker">
+                <span>01</span><i></i><strong>ESSÊNCIA</strong>
             </div>
-            <div class="intro-content">
-                <h2>Uma fragrância diz muito antes mesmo de você dizer uma palavra.</h2>
-                <p>Na Florisbela, cada escolha começa por aquilo que uma fragrância desperta: uma lembrança, uma
-                    sensação, uma presença que permanece.</p>
+
+            <div class="intro-grid">
+                <div class="intro-title-wrap">
+                    <h2>Uma fragrância<br><em>diz muito antes</em><br>mesmo de você<br>dizer uma palavra.</h2>
+                </div>
+
+                <div class="intro-media" aria-hidden="true">
+                    <video autoplay muted loop playsinline preload="metadata" poster="assets/florisbela.png">
+                        <source src="assets/florisbela-essencia.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
         </section>
 
+        <!-- COLEÇÃO -->
         <section class="collection section" id="colecao">
-            <div class="section-heading">
+            <div class="section-marker">
+                <span>02</span><i></i><strong>A COLEÇÃO</strong>
+            </div>
+
+            <div class="collection-heading">
                 <div>
-                    <span class="eyebrow">A COLEÇÃO</span>
-                    <h2>Encontre a sua assinatura.</h2>
+                    <h2>Encontre a sua <em>essência.</em></h2>
+                    <p>Explore fragrâncias selecionadas para diferentes momentos, estilos e personalidades.</p>
                 </div>
-                <p>Explore fragrâncias selecionadas para diferentes momentos, estilos e personalidades.</p>
             </div>
 
             <div class="collection-grid">
-                <!-- =================================================
-                 PERFUMES MASCULINOS
-            ================================================== -->
-                <article class="collection-card">
-                    <div class="collection-visual">
-                        <img src="assets/king.png" alt="Perfumes masculinos Florisbela" class="collection-image"
-                            loading="lazy">
-                        <span class="collection-index">02</span>
+
+                <a class="collection-card collection-card--men" href="perfume-masculino.html">
+                    <video autoplay muted loop playsinline preload="metadata"
+                        aria-label="Perfumes masculinos Florisbela">
+                        <source src="assets/king.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-shade"></div>
+                    <div class="card-copy">
+                        <span>PERFUMES</span>
+                        <h3>Masculinos</h3>
+                        <p>Força, elegância e presença para todos os momentos.</p>
+                        <b>EXPLORAR <i>→</i></b>
                     </div>
+                </a>
 
-                    <div class="collection-info">
-                        <span class="collection-kicker">PERFUMES · MASCULINOS</span>
-                        <h3>Perfumes Masculinos</h3>
-                        <a href="perfume-masculino.html" class="card-link">
-                            Descobrir <span>↗</span>
-                        </a>
+                <a class="collection-card collection-card--women" href="perfume-feminino.html">
+                    <video autoplay muted loop playsinline preload="metadata"
+                        aria-label="Perfumes femininos Florisbela">
+                        <source src="assets/queen.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-shade"></div>
+                    <div class="card-copy">
+                        <span>PERFUMES</span>
+                        <h3>Femininos</h3>
+                        <p>Delicadeza, sofisticação e personalidade em cada detalhe.</p>
+                        <b>EXPLORAR <i>→</i></b>
                     </div>
-                </article>
+                </a>
 
-                <!-- =================================================
-                 PERFUMES FEMININOS
-            ================================================== -->
-                <article class="collection-card">
-                    <div class="collection-visual">
-                        <img src="assets/queen.png" alt="Perfumes femininos Florisbela" class="collection-image"
-                            loading="lazy">
-                        <span class="collection-index">03</span>
-                    </div>
-
-                    <div class="collection-info">
-                        <span class="collection-kicker">PERFUMES · FEMININOS</span>
-                        <h3>Perfumes Femininos</h3>
-                        <a href="perfume-feminino.html" class="card-link">
-                            Descobrir <span>↗</span>
-                        </a>
-                    </div>
-                </article>
-
-                <article class="collection-card collection-card-body">
-                    <div class="collection-visual">
-                        <img src="assets/bodysplash.png" alt="Coleção de Body Splash feminino" class="collection-image"
-                            loading="lazy">
-
-                        <span class="collection-index">03</span>
-                    </div>
-
-                    <div class="collection-info">
-                        <span class="collection-kicker">
-                            CORPO &amp; FRAGRÂNCIA · FEMININO
-                        </span>
-
+                <a class="collection-card collection-card--body" href="body-splash.html">
+                    <video autoplay muted loop playsinline preload="metadata" aria-label="Body Splash Florisbela">
+                        <source src="assets/bodysplash.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-shade"></div>
+                    <div class="card-copy">
+                        <span>CORPO &amp; FRAGRÂNCIA</span>
                         <h3>Body Splash</h3>
-
-                        <a href="body-splash.html" class="card-link">
-                            Descobrir <span>↗</span>
-                        </a>
+                        <p>Leveza, frescor e personalidade para acompanhar sua rotina.</p>
+                        <b>EXPLORAR <i>→</i></b>
                     </div>
-                </article>
+                </a>
+
             </div>
         </section>
 
+        <!-- NOTAS -->
         <section class="notes section" id="notas">
-            <div class="notes-copy">
-                <span class="eyebrow">A ARTE DA FRAGRÂNCIA</span>
-                <h2>Notas que revelam uma personalidade.</h2>
-                <p>Uma fragrância se revela aos poucos. Da primeira impressão ao rastro que permanece, cada camada conta
-                    uma parte da história.</p>
+            <div class="section-marker">
+                <span>03</span><i></i><strong>NOTAS OLFATIVAS</strong>
             </div>
 
-            <div class="notes-list">
-                <div class="note-row">
-                    <span class="note-number">01</span>
-                    <div>
-                        <h3>Saída</h3>
-                        <p>A primeira impressão. Frescor, impacto e descoberta.</p>
-                    </div>
+            <div class="notes-grid">
+                <div class="notes-copy">
+                    <h2>Mais que fragrâncias,<br><em>experiências.</em></h2>
+                    <p>
+                        Descubra famílias olfativas que despertam sensações,
+                        memórias e emoções únicas.
+                    </p>
+                    <a href="#contato" class="outline-link">EXPLORAR NOTAS <span>→</span></a>
                 </div>
-                <div class="note-row">
-                    <span class="note-number">02</span>
-                    <div>
-                        <h3>Coração</h3>
-                        <p>A personalidade da fragrância começa a aparecer.</p>
-                    </div>
-                </div>
-                <div class="note-row">
-                    <span class="note-number">03</span>
-                    <div>
-                        <h3>Fundo</h3>
-                        <p>O rastro que permanece muito depois do primeiro encontro.</p>
-                    </div>
+
+                <div class="notes-list">
+                    <article class="note-card">
+                        <div class="note-art note-art--citrica"
+                            style="background-image: url('assets/notas/notas-citricas.png');" aria-hidden="true"></div>
+                        <div><span>CÍTRICAS</span><small>Energia e vitalidade</small></div>
+                    </article>
+                    <article class="note-card">
+                        <div class="note-art note-art--floral"
+                            style="background-image: url('assets/notas/notas-florais.png');" aria-hidden="true"></div>
+                        <div><span>FLORAIS</span><small>Romance e delicadeza</small></div>
+                    </article>
+                    <article class="note-card">
+                        <div class="note-art note-art--madeirada"
+                            style="background-image: url('assets/notas/notas-amadeiradas.png');" aria-hidden="true">
+                        </div>
+                        <div><span>AMADEIRADAS</span><small>Força e sofisticação</small></div>
+                    </article>
+                    <article class="note-card">
+                        <div class="note-art note-art--oriental"
+                            style="background-image: url('assets/notas/notas-orientais.png');" aria-hidden="true"></div>
+                        <div><span>ORIENTAIS</span><small>Mistério e intensidade</small></div>
+                    </article>
                 </div>
             </div>
         </section>
 
+        <!-- CTA -->
         <section class="final-cta section" id="contato">
             <div class="final-cta-inner">
-                <span class="eyebrow">ENCONTRE SUA ESSÊNCIA</span>
-                <h2>Qual história você quer deixar no ar?</h2>
+                <span>ENCONTRE SUA ESSÊNCIA</span>
+                <h2>Qual história você quer<br>deixar no ar?</h2>
                 <p>Fale com a Florisbela e encontre a fragrância que combina com você.</p>
-                <a href="#colecao" class="button button-outline">Explorar a coleção <span>↗</span></a>
+                <a href="#colecao" class="button button-gold">Explorar a coleção <span>↗</span></a>
             </div>
         </section>
+
     </main>
 
     <footer class="site-footer">
         <div class="footer-brand">
-            <img src="assets/logo-florisbela.png" alt="Florisbela Perfumaria" class="footer-logo">
-            <p>PERFUMARIA</p>
+            <img src="assets/logo-florisbela.png" alt="Florisbela Perfumaria">
         </div>
         <div class="footer-links">
             <a href="#">Instagram</a>
@@ -198,8 +213,7 @@
         <small>© 2026 Florisbela Perfumaria. Todos os direitos reservados.</small>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>

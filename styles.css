@@ -1,0 +1,1356 @@
+/* ==========================================================
+   FLORISBELA · FOUNDATION
+   Design System aplicado à landing page
+
+   Arquitetura:
+   1. Reset
+   2. Tokens
+   3. Base
+   4. Layout
+   5. Components
+   6. Utilities / Motion
+   ========================================================== */
+
+/* ==========================================================
+   1. RESET
+   ========================================================== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+    background: var(--color-background);
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-width: 320px;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+    display: block;
+    max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+    overflow-wrap: break-word;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+}
+
+::selection {
+    background: var(--color-primary);
+    color: var(--color-black);
+}
+
+/* ==========================================================
+   2. FOUNDATION TOKENS — FLORISBELA THEME
+   ========================================================== */
+:root {
+    /* Brand */
+    --color-primary: #C9A45C;
+    --color-primary-hover: #E0BF79;
+    --color-primary-active: #A98545;
+    --color-primary-soft: rgba(201, 164, 92, .12);
+    --color-primary-border: rgba(201, 164, 92, .42);
+
+    /* Neutrals */
+    --color-white: #F7F3EB;
+    --color-black: #030303;
+
+    /* Surfaces */
+    --color-background: #080706;
+    --color-surface: #0D0B09;
+    --color-surface-mid: #12100D;
+    --color-surface-elevated: #1A1713;
+
+    /* Borders */
+    --color-border: rgba(247, 243, 235, .13);
+    --color-border-hover: rgba(247, 243, 235, .30);
+
+    /* Text */
+    --color-text: #F7F3EB;
+    --color-text-secondary: #C9C1B6;
+    --color-text-muted: #8E877E;
+
+    /* Feedback */
+    --color-success: #10B981;
+    --color-warning: #F59E0B;
+    --color-danger: #EF4444;
+    --color-info: #3B82F6;
+
+    /* Spacing — Foundation scale */
+    --space-0: 0;
+    --space-1: .25rem;
+    --space-2: .5rem;
+    --space-3: .75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    --space-24: 6rem;
+    --section-space: clamp(90px, 11vw, 170px);
+
+    /* Typography — Foundation adapted to Florisbela */
+    --font-heading: "Cormorant Garamond", Georgia, serif;
+    --font-body: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-family-base: var(--font-body);
+
+    --font-size-xs: .75rem;
+    --font-size-sm: .875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.5rem;
+    --font-size-2xl: 2rem;
+    --font-size-3xl: 3rem;
+
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    --line-height-tight: 1.08;
+    --line-height-base: 1.5;
+    --line-height-relaxed: 1.625;
+
+    /* Radius */
+    --radius-none: 0;
+    --radius-xs: .125rem;
+    --radius-sm: .25rem;
+    --radius-md: .375rem;
+    --radius-lg: .5rem;
+    --radius-xl: .75rem;
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, .40);
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, .50);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, .50), 0 2px 4px -1px rgba(0, 0, 0, .40);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, .60), 0 4px 6px -2px rgba(0, 0, 0, .40);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, .70), 0 10px 10px -5px rgba(0, 0, 0, .50);
+
+    /* Motion */
+    --ease-out-expo: cubic-bezier(.16, 1, .3, 1);
+    --transition-fast: 150ms var(--ease-out-expo);
+    --transition-base: 250ms var(--ease-out-expo);
+    --transition-slow: 400ms var(--ease-out-expo);
+
+    /* Layout */
+    --container-max-width: 1360px;
+    --container: 1360px;
+    --topbar-height: 65px;
+    --header-height: 72px;
+    --page-pad: clamp(22px, 4vw, 64px);
+
+    /* Z-index */
+    --z-base: 0;
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-fixed: 300;
+    --z-navbar: 500;
+}
+
+/* ==========================================================
+   3. BASE
+   ========================================================== */
+body {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+    background: var(--color-background);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-tight);
+    letter-spacing: -.028em;
+    color: var(--color-text);
+}
+
+em {
+    color: var(--color-primary);
+    font-style: italic;
+}
+
+/* ==========================================================
+   4. LAYOUT
+   ========================================================== */
+.container {
+    width: min(var(--container), calc(100% - 8vw));
+    margin-inline: auto;
+}
+
+.section {
+    position: relative;
+    width: 100%;
+}
+
+/* Foundation Topbar — fixed, no geometry changes on scroll */
+.site-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-navbar);
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+
+    width: 100%;
+    height: var(--header-height);
+
+    padding: 0 var(--page-pad);
+
+    background: rgba(8, 7, 6, .55);
+    border-bottom: 1px solid rgba(201, 164, 92, .14);
+
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+
+/* Logo participates normally in the sticky topbar.
+   No fixed positioning, transforms or scroll calculations. */
+.brand {
+    justify-self: start;
+    display: block;
+    width: 220px;
+}
+
+.brand-logo {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(22px, 3vw, 48px);
+}
+
+.main-nav a,
+.header-cta {
+    font-size: 10px;
+    font-weight: var(--font-weight-medium);
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.main-nav a {
+    position: relative;
+    color: var(--color-text);
+}
+
+.main-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -7px;
+    width: 0;
+    height: 1px;
+    background: var(--color-primary);
+    transition: width var(--transition-slow);
+}
+
+.main-nav a:hover::after {
+    width: 100%;
+}
+
+.header-cta {
+    justify-self: end;
+    color: var(--color-primary);
+}
+
+/* ==========================================================
+   5. COMPONENTS — HERO
+   ========================================================== */
+.hero {
+    position: relative;
+    min-height: calc(100svh - var(--topbar-height));
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--color-background);
+}
+
+.hero-media,
+.hero-overlay,
+.hero-vignette {
+    position: absolute;
+    inset: 0;
+}
+
+.hero-media {
+    z-index: -3;
+}
+
+.hero-overlay {
+    z-index: -2;
+}
+
+.hero-vignette {
+    z-index: -1;
+}
+
+.hero-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(.56) contrast(1.06) saturate(.9);
+}
+
+.hero-overlay {
+    background: linear-gradient(90deg, rgba(5, 4, 3, .30), transparent 48%, rgba(5, 4, 3, .18));
+}
+
+.hero-vignette {
+    background:
+        radial-gradient(circle at center, transparent 30%, rgba(5, 4, 3, .30) 75%, rgba(5, 4, 3, .78)),
+        linear-gradient(to bottom, rgba(5, 4, 3, .25), transparent 25%, transparent 70%, rgba(5, 4, 3, .7));
+}
+
+.hero-center {
+    width: min(900px, calc(100% - 40px));
+    margin-top: var(--space-12);
+    text-align: center;
+}
+
+.hero-brand {
+    font-family: var(--font-heading);
+    font-size: clamp(25px, 2.6vw, 38px);
+    letter-spacing: .28em;
+    text-transform: uppercase;
+}
+
+.hero-brand span {
+    display: block;
+    margin-top: 7px;
+    font-family: var(--font-body);
+    font-size: 8px;
+    letter-spacing: .45em;
+    color: var(--color-primary);
+}
+
+.hero-rule {
+    display: block;
+    width: 48px;
+    height: 1px;
+    margin: 22px auto;
+    background: var(--color-primary);
+}
+
+.hero-eyebrow,
+.section-marker strong,
+.section-marker span,
+.hero-scroll,
+.card-copy>span,
+.note-card span,
+.final-cta-inner>span {
+    letter-spacing: .30em;
+    text-transform: uppercase;
+}
+
+.hero-eyebrow {
+    margin-bottom: 19px;
+    color: var(--color-primary);
+    font-size: 10px;
+}
+
+.hero h1 {
+    font-size: clamp(64px, 8vw, 118px);
+}
+
+.hero-lead {
+    margin: 27px auto 28px;
+    font-family: var(--font-heading);
+    font-size: clamp(17px, 1.5vw, 22px);
+    line-height: 1.25;
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.hero-scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 23px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text-muted);
+    font-size: 8px;
+}
+
+.hero-scroll i {
+    width: 1px;
+    height: 28px;
+    background: linear-gradient(var(--color-primary), transparent);
+}
+
+/* ==========================================================
+   FOUNDATION COMPONENT — BUTTON
+   ========================================================== */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .85rem;
+    min-width: 220px;
+    padding: 15px 24px;
+    border: 1px solid var(--color-border-hover);
+    border-radius: var(--radius-none);
+    font-size: 10px;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: transform var(--transition-base), background var(--transition-base), border-color var(--transition-base), color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.button:active {
+    transform: translateY(0);
+}
+
+.button-gold {
+    background: var(--color-white);
+    color: var(--color-black);
+    border-color: var(--color-white);
+}
+
+.button-gold:hover {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.button-ghost {
+    background: rgba(255, 255, 255, .04);
+    color: var(--color-white);
+    backdrop-filter: blur(8px);
+}
+
+.button-ghost:hover {
+    background: rgba(255, 255, 255, .10);
+    border-color: var(--color-white);
+}
+
+/* ==========================================================
+   COMPONENT — SECTION MARKER
+   ========================================================== */
+.section-marker {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0 var(--page-pad);
+    color: var(--color-primary);
+    font-size: 10px;
+}
+
+.section-marker span {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    letter-spacing: .10em;
+}
+
+.section-marker i {
+    width: 38px;
+    height: 1px;
+    background: var(--color-primary);
+}
+
+.section-marker strong {
+    font-weight: var(--font-weight-medium);
+}
+
+/* ==========================================================
+   COMPONENT — INTRO
+   ========================================================== */
+.intro {
+    min-height: 410px;
+    padding: 38px 0 75px;
+    border-top: 1px solid var(--color-border);
+    overflow: hidden;
+    background: var(--color-background);
+}
+
+.intro-grid {
+    position: relative;
+    width: min(var(--container), 100%);
+    min-height: 540px;
+    margin-inline: auto;
+    padding: 55px var(--page-pad) 70px;
+    display: grid;
+    grid-template-columns: 1.02fr .98fr;
+    gap: clamp(40px, 6vw, 90px);
+    align-items: center;
+}
+
+.intro-title-wrap,
+.intro-copy {
+    position: relative;
+    z-index: 2;
+}
+
+.intro h2 {
+    max-width: 700px;
+    font-size: clamp(48px, 5vw, 76px);
+}
+
+.intro-copy {
+    max-width: 400px;
+}
+
+.intro-copy p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+}
+
+.intro-media {
+    position: relative;
+    width: 100%;
+    height: clamp(360px, 34vw, 500px);
+    overflow: hidden;
+    opacity: .86;
+    pointer-events: none;
+
+    /* Softens every edge so the video belongs to the section
+       instead of looking like a rectangular image pasted on it. */
+    -webkit-mask-image:
+        linear-gradient(to right,
+            transparent 0%,
+            rgba(0, 0, 0, .55) 5%,
+            black 16%,
+            black 84%,
+            rgba(0, 0, 0, .72) 96%,
+            transparent 100%),
+        linear-gradient(to bottom,
+            transparent 0%,
+            black 10%,
+            black 88%,
+            transparent 100%);
+    -webkit-mask-composite: intersect;
+
+    mask-image:
+        linear-gradient(to right,
+            transparent 0%,
+            rgba(0, 0, 0, .55) 5%,
+            black 16%,
+            black 84%,
+            rgba(0, 0, 0, .72) 96%,
+            transparent 100%),
+        linear-gradient(to bottom,
+            transparent 0%,
+            black 10%,
+            black 88%,
+            transparent 100%);
+    mask-composite: intersect;
+}
+
+.intro-media::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: 2;
+    pointer-events: none;
+    background:
+        linear-gradient(to left,
+            rgba(8, 7, 6, .08),
+            transparent 16%),
+        linear-gradient(to right,
+            rgba(8, 7, 6, .80),
+            rgba(8, 7, 6, .28) 15%,
+            transparent 34%),
+        linear-gradient(to bottom,
+            rgba(8, 7, 6, .28),
+            transparent 22%,
+            transparent 74%,
+            rgba(8, 7, 6, .88));
+}
+
+.intro-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter:
+        brightness(.66) contrast(.94) saturate(.72) sepia(.06);
+}
+
+/* ==========================================================
+   COMPONENT — COLLECTION / CARDS
+   ========================================================== */
+.collection {
+    padding: 40px 0 85px;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-background);
+}
+
+.collection-heading {
+    width: min(var(--container), 100%);
+    margin-inline: auto;
+    padding: 24px var(--page-pad) 28px;
+}
+
+.collection-heading h2 {
+    font-size: clamp(45px, 5vw, 72px);
+}
+
+.collection-heading p {
+    max-width: 620px;
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+}
+
+.collection-grid {
+    width: min(1380px, 100%);
+    margin-inline: auto;
+    padding: 0 30px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.collection-card {
+    position: relative;
+    min-height: 330px;
+    overflow: hidden;
+    isolation: isolate;
+    border: 1px solid var(--color-border);
+    background: var(--color-background);
+}
+
+.collection-card--body {
+    grid-column: 1 / -1;
+
+    width: min(100%, 680px);
+    aspect-ratio: 1 / 1;
+
+    min-height: 0;
+    height: auto;
+
+    justify-self: center;
+
+    overflow: hidden;
+    position: relative;
+
+    background: var(--color-background);
+}
+
+/* Fundo ampliado do próprio vídeo */
+.collection-card--body::before {
+    content: "";
+    position: absolute;
+    inset: -8%;
+
+    background: inherit;
+    z-index: -3;
+}
+
+/* Vídeo principal */
+
+.collection-card--body>video {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    object-position: center;
+
+    filter: brightness(.72) saturate(.9);
+
+    background: #0a0a0a;
+
+    transition:
+        transform 1s var(--ease-out-expo),
+        filter 1s var(--ease-out-expo);
+}
+
+.collection-card--body>video {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    object-position: center;
+
+    background: var(--color-background);
+
+    filter: brightness(.72) saturate(.9);
+
+    transition:
+        transform 1s var(--ease-out-expo),
+        filter 1s var(--ease-out-expo);
+}
+
+.collection-card>video {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(.72) saturate(.9);
+    transition: transform 1s var(--ease-out-expo), filter 1s var(--ease-out-expo);
+}
+
+.collection-card:hover>video {
+    transform: scale(1.025);
+    filter: brightness(.84) saturate(1);
+}
+
+.card-shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, rgba(5, 4, 3, .78), rgba(5, 4, 3, .18) 65%, rgba(5, 4, 3, .48));
+}
+
+.card-copy {
+    position: absolute;
+    left: clamp(25px, 4vw, 55px);
+    bottom: 35px;
+    max-width: 310px;
+}
+
+.card-copy>span {
+    font-size: 10px;
+}
+
+.card-copy h3 {
+    margin: 8px 0 10px;
+    font-size: clamp(36px, 3.4vw, 53px);
+}
+
+.card-copy p {
+    max-width: 290px;
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+}
+
+.card-copy b {
+    display: inline-flex;
+    gap: 14px;
+    margin-top: 20px;
+    padding: 10px 17px;
+    border: 1px solid var(--color-border-hover);
+    font-size: 9px;
+    letter-spacing: .28em;
+    font-weight: var(--font-weight-medium);
+}
+
+.card-copy b i {
+    font-style: normal;
+    color: var(--color-primary);
+}
+
+/* ==========================================================
+   COMPONENT — NOTES
+   ========================================================== */
+.notes {
+    padding: 45px 0 100px;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-background);
+}
+
+.notes-grid {
+    width: min(var(--container), 100%);
+    margin-inline: auto;
+    padding: 35px var(--page-pad) 0;
+    display: grid;
+    grid-template-columns: .85fr 1.35fr;
+    gap: 70px;
+    align-items: center;
+}
+
+.notes-copy h2 {
+    font-size: clamp(48px, 5vw, 74px);
+}
+
+.notes-copy p {
+    max-width: 420px;
+    margin: 22px 0 25px;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+}
+
+.outline-link {
+    display: inline-flex;
+    gap: 14px;
+    padding: 12px 18px;
+    border: 1px solid var(--color-primary-border);
+    color: var(--color-primary);
+    font-size: 9px;
+    letter-spacing: .30em;
+}
+
+.notes-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.note-card {
+    min-width: 0;
+    min-height: 265px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: flex-end;
+}
+
+.note-art {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+
+.note-art--citrica {
+    background: radial-gradient(circle at 50% 35%, #bd7a2d, #3b2112 60%, #0c0806);
+}
+
+.note-art--floral {
+    background: radial-gradient(circle at 45% 35%, #c29b84, #4c3029 60%, #120b09);
+}
+
+.note-art--madeirada {
+    background: linear-gradient(125deg, #4a2c1a, #9a6a3e 45%, #160d08);
+}
+
+.note-art--oriental {
+    background: radial-gradient(circle at 55% 40%, #c77728, #5b2910 55%, #100704);
+}
+
+.note-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(5, 4, 3, .9), transparent 70%);
+}
+
+.note-card>div:last-child {
+    position: relative;
+    z-index: 2;
+    padding: 18px;
+}
+
+.note-card span {
+    display: block;
+    font-size: 9px;
+}
+
+.note-card small {
+    display: block;
+    margin-top: 5px;
+    color: var(--color-primary);
+    font-size: 9px;
+}
+
+/* ==========================================================
+   COMPONENT — CTA / FOOTER
+   ========================================================== */
+.final-cta {
+    min-height: 500px;
+    display: grid;
+    place-items: center;
+    padding: 90px var(--page-pad);
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+    background: var(--color-background);
+}
+
+.final-cta-inner {
+    max-width: 850px;
+}
+
+.final-cta-inner>span {
+    color: var(--color-primary);
+    font-size: 10px;
+}
+
+.final-cta h2 {
+    margin: 25px 0 20px;
+    font-size: clamp(54px, 6vw, 88px);
+}
+
+.final-cta p {
+    margin: 0 auto 30px;
+    color: var(--color-text-muted);
+    font-size: 14px;
+}
+
+.site-footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 50px var(--page-pad) 30px;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-background);
+}
+
+.footer-brand img {
+    width: 190px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 25px;
+}
+
+.footer-links a {
+    font-size: 9px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+.site-footer small {
+    color: #69645e;
+    font-size: 9px;
+}
+
+/* ==========================================================
+   6. FOUNDATION MOTION / UTILITIES
+   ========================================================== */
+.fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 750ms var(--ease-out-expo), transform 750ms var(--ease-out-expo);
+}
+
+.fade-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* The page uses only transform + opacity for reveal motion.
+   No animation is attached to the logo. */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .fade-up {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+@media (max-width: 992px) {
+    .site-header {
+        grid-template-columns: 1fr auto;
+        gap: var(--space-4);
+        padding-inline: var(--space-4);
+    }
+
+    .main-nav {
+        display: none;
+    }
+
+    .header-cta {
+        justify-self: end;
+    }
+
+    .intro-grid,
+    .notes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .intro-media {
+        width: 100%;
+        min-height: 320px;
+        opacity: .78;
+        mask-image: linear-gradient(to right, transparent, black 8%);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 8%);
+    }
+
+    .notes-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .site-header {
+        height: var(--header-height);
+    }
+
+    .brand {
+        width: 180px;
+    }
+
+    .header-cta {
+        font-size: 9px;
+    }
+
+    .hero {
+        min-height: calc(100svh - var(--header-height));
+    }
+
+    .hero h1 {
+        font-size: clamp(55px, 12vw, 88px);
+    }
+
+    .hero-center {
+        margin-top: var(--space-6);
+    }
+
+    .collection-grid {
+        grid-template-columns: 1fr;
+        padding-inline: 18px;
+    }
+
+    .collection-card--body {
+        grid-column: auto;
+
+        width: 100%;
+        aspect-ratio: 1 / 1;
+
+        min-height: 0;
+        height: auto;
+    }
+
+    .collection-card--body>video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .site-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 600px) {
+    .page-pad {
+        padding-inline: var(--space-4);
+    }
+
+    .desktop-only {
+        display: none;
+    }
+
+    .hero {
+        min-height: 680px;
+    }
+
+    .hero h1 {
+        font-size: clamp(48px, 15vw, 70px);
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .button {
+        width: 100%;
+    }
+
+    .intro {
+        min-height: 520px;
+    }
+
+    .intro-media {
+        width: 100%;
+        min-height: 300px;
+        opacity: .72;
+        mask-image: none;
+        -webkit-mask-image: none;
+    }
+
+    .intro-media video {
+        min-height: 300px;
+    }
+
+    .notes-list {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .note-card {
+        min-height: 220px;
+    }
+}
+
+/* =========================================================
+   FLORISBELA — NOTAS OLFATIVAS / 3D ASSETS
+   ========================================================= */
+
+.notes-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.note-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 390px;
+    isolation: isolate;
+    background: #0a0807;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* =========================================================
+   ASSET 3D
+   ========================================================= */
+
+.note-art {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+
+    transform-origin: center center;
+
+    will-change: transform;
+
+    z-index: -2;
+}
+
+/* =========================================================
+   IDENTIDADE DOS ASSETS
+   ========================================================= */
+
+.note-art--citrica {
+    background-position: center center;
+}
+
+.note-art--floral {
+    background-position: center center;
+}
+
+.note-art--madeirada {
+    background-position: center center;
+}
+
+.note-art--oriental {
+    background-position: center center;
+}
+
+
+/* =========================================================
+   PROFUNDIDADE / LEITURA DO TEXTO
+   ========================================================= */
+
+.note-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.02) 20%,
+            rgba(0, 0, 0, 0.08) 42%,
+            rgba(0, 0, 0, 0.58) 72%,
+            rgba(0, 0, 0, 0.94) 100%);
+
+    z-index: -1;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   TEXTO
+   ========================================================= */
+
+.note-card>div:last-child {
+    position: absolute;
+
+    left: 26px;
+    right: 20px;
+    bottom: 24px;
+
+    z-index: 2;
+
+    pointer-events: none;
+}
+
+.note-card>div:last-child span {
+    display: block;
+
+    margin-bottom: 9px;
+
+    font-family: "Manrope", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+
+    color: #fff;
+}
+
+.note-card>div:last-child small {
+    display: block;
+
+    font-family: "Manrope", sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
+
+    color: rgba(216, 166, 58, 0.95);
+}
+
+
+/* =========================================================
+   HOVER
+   ========================================================= */
+
+@media (hover: hover) and (pointer: fine) {
+
+    .note-card {
+        transition:
+            border-color 0.45s ease,
+            transform 0.45s ease;
+    }
+
+    .note-card:hover {
+        border-color: rgba(216, 166, 58, 0.42);
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .notes-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .note-card {
+        min-height: 360px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .notes-list {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .note-card {
+        min-height: 420px;
+    }
+
+    .note-card>div:last-child {
+        left: 22px;
+        right: 18px;
+        bottom: 22px;
+    }
+
+}

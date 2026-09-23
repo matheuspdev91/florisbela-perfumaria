@@ -1,0 +1,407 @@
+/* Componentes exclusivos da página masculina. A base continua em styles.css. */
+.masc-hero {
+    position: relative;
+    min-height: 88svh;
+    overflow: hidden;
+    isolation: isolate;
+    display: grid;
+    align-items: end;
+    background: #080706
+}
+
+.masc-hero-image,
+.masc-hero-shade {
+    position: absolute;
+    inset: 0
+}
+
+.masc-hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    filter: brightness(.52) saturate(.82)
+}
+
+.masc-hero-shade {
+    z-index: -1;
+    background: linear-gradient(90deg, rgba(5, 4, 3, .88), rgba(5, 4, 3, .30) 60%, rgba(5, 4, 3, .55)), linear-gradient(0deg, rgba(5, 4, 3, .82), transparent 55%)
+}
+
+.masc-hero-content {
+    width: min(var(--container), 100%);
+    padding: 150px var(--page-pad) 90px
+}
+
+.masc-hero .eyebrow-line {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    color: var(--color-primary);
+    font-size: 10px;
+    letter-spacing: .28em
+}
+
+.masc-hero .eyebrow-line .line {
+    width: 42px;
+    height: 1px;
+    background: var(--color-primary)
+}
+
+.masc-hero h1 {
+    max-width: 760px;
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(70px, 9vw, 138px);
+    font-weight: 400;
+    line-height: .82;
+    color: var(--color-white)
+}
+
+.masc-hero h1 em,
+.masc-intro h2 em,
+.masc-gallery h2 em,
+.masc-cta h2 em {
+    color: var(--color-primary)
+}
+
+.masc-hero-content>p {
+    max-width: 460px;
+    margin: 28px 0 22px;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    line-height: 1.7
+}
+
+.masc-tags {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    color: var(--color-text-muted);
+    font-size: 9px;
+    letter-spacing: .25em
+}
+
+.masc-tags i {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--color-primary)
+}
+
+.masc-scroll {
+    position: absolute;
+    right: var(--page-pad);
+    bottom: 34px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text-muted);
+    font-size: 8px;
+    letter-spacing: .2em
+}
+
+.masc-scroll i {
+    width: 1px;
+    height: 34px;
+    background: linear-gradient(var(--color-primary), transparent)
+}
+
+.masc-intro {
+    padding: 50px 0 95px;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface)
+}
+
+.masc-intro-grid {
+    width: min(var(--container), 100%);
+    margin-inline: auto;
+    padding: 55px var(--page-pad) 0;
+    display: grid;
+    grid-template-columns: 1.15fr .7fr;
+    gap: var(--space-12);
+    align-items: end
+}
+
+.masc-intro h2 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(55px, 7vw, 100px);
+    font-weight: 400;
+    line-height: .88
+}
+
+.masc-intro p {
+    max-width: 420px;
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    line-height: 1.8
+}
+
+.masc-gallery {
+    padding: 45px 0 110px;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface-mid)
+}
+
+.masc-gallery-heading {
+    width: min(var(--container), 100%);
+    margin-inline: auto;
+    padding: 0 var(--page-pad) 40px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 25px
+}
+
+.masc-gallery-heading>span {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    color: var(--color-primary)
+}
+
+.masc-gallery-heading small {
+    color: var(--color-primary);
+    font-size: 9px;
+    letter-spacing: .3em
+}
+
+.masc-gallery-heading h2 {
+    margin: 10px 0 0;
+    font-family: var(--font-heading);
+    font-size: clamp(50px, 6vw, 90px);
+    font-weight: 400;
+    line-height: .88
+}
+
+.masc-gallery-grid {
+    width: min(1380px, calc(100% - 60px));
+    margin-inline: auto;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    align-items: start;
+}
+
+
+/* =========================================================
+   CARDS — PADRÃO EDITORIAL
+   Todos os perfumes seguem o mesmo formato visual.
+========================================================= */
+
+.masc-card,
+.masc-card--tall,
+.masc-card--wide,
+.masc-card--landscape {
+    position: relative;
+    grid-column: span 1;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background: #0d0c0b;
+    isolation: isolate;
+    align-self: start;
+}
+
+.masc-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(.78) saturate(.88);
+    will-change: transform;
+    transform-origin: center center;
+    transition: filter 800ms var(--ease-out-expo);
+}
+
+.masc-card:hover img {
+    filter: brightness(.90) saturate(1);
+}
+
+
+/* =========================================================
+   ENQUADRAMENTO DOS PRODUTOS
+========================================================= */
+
+/* Mantém os produtos visualmente centrados */
+.masc-card:nth-child(1) img,
+.masc-card:nth-child(2) img,
+.masc-card:nth-child(3) img,
+.masc-card:nth-child(4) img,
+.masc-card:nth-child(5) img,
+.masc-card:nth-child(6) img,
+.masc-card:nth-child(7) img,
+.masc-card:nth-child(8) img,
+.masc-card:nth-child(9) img {
+    object-position: center center;
+}
+
+
+/* =========================================================
+   IDENTIFICAÇÃO EDITORIAL
+========================================================= */
+
+.masc-card__info {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 2;
+    width: 100%;
+    box-sizing: border-box;
+    padding: clamp(22px, 3vw, 38px);
+    color: var(--color-white);
+    background: linear-gradient(0deg,
+            rgba(5, 4, 3, .94) 0%,
+            rgba(5, 4, 3, .72) 48%,
+            rgba(5, 4, 3, 0) 100%);
+    pointer-events: none;
+}
+
+.masc-card__category {
+    display: block;
+    margin-bottom: 9px;
+    color: var(--color-primary);
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+}
+
+.masc-card__info h3 {
+    margin: 0;
+    max-width: 90%;
+    font-family: var(--font-heading);
+    font-size: clamp(32px, 3.2vw, 54px);
+    font-weight: 400;
+    line-height: .9;
+    color: var(--color-white);
+}
+
+.masc-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 18px;
+    color: var(--color-primary);
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+    text-decoration: none;
+    pointer-events: auto;
+}
+
+.masc-card__link span {
+    font-size: 13px;
+    line-height: 1;
+}
+
+.masc-card:hover .masc-card__info {
+    background: linear-gradient(0deg,
+            rgba(5, 4, 3, .96) 0%,
+            rgba(5, 4, 3, .76) 48%,
+            rgba(5, 4, 3, .04) 100%);
+}
+
+
+.masc-cta {
+    padding: 110px var(--page-pad);
+    text-align: center;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface)
+}
+
+.masc-cta>span {
+    color: var(--color-primary);
+    font-size: 9px;
+    letter-spacing: .3em
+}
+
+.masc-cta h2 {
+    margin: 18px 0 30px;
+    font-family: var(--font-heading);
+    font-size: clamp(58px, 7vw, 105px);
+    font-weight: 400;
+    line-height: .88
+}
+
+.masc-cta .button {
+    display: inline-flex
+}
+
+@media(max-width:900px) {
+
+    .masc-intro-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .masc-gallery-grid {
+        width: min(100% - 36px, 700px);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .masc-card,
+    .masc-card--tall,
+    .masc-card--wide,
+    .masc-card--landscape {
+        grid-column: span 1;
+        aspect-ratio: 4 / 5;
+    }
+}
+
+
+@media(max-width:600px) {
+
+    .masc-hero {
+        min-height: 760px;
+    }
+
+    .masc-hero-content {
+        padding: 140px var(--space-4) 80px;
+    }
+
+    .masc-hero h1 {
+        font-size: clamp(58px, 17vw, 82px);
+    }
+
+    .masc-tags {
+        flex-wrap: wrap;
+    }
+
+    .masc-gallery-heading {
+        grid-template-columns: 45px 1fr;
+        padding-inline: var(--space-4);
+    }
+
+    .masc-gallery-grid {
+        width: calc(100% - 36px);
+        grid-template-columns: 1fr;
+        padding: 0;
+        gap: 14px;
+    }
+
+    .masc-card,
+    .masc-card--tall,
+    .masc-card--wide,
+    .masc-card--landscape {
+        grid-column: 1 / -1;
+        aspect-ratio: 4 / 5;
+    }
+
+    .masc-card__info {
+        padding: 24px 22px;
+    }
+
+    .masc-card__info h3 {
+        font-size: 38px;
+    }
+}

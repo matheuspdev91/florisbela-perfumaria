@@ -1,227 +1,1114 @@
-document.addEventListener("DOMContentLoaded", () => {
-    initHeroVideo();
-    initSmoothScroll();
-    initFlorisbelaAnimations();
+import {
+    animate,
+    stagger
+} from "https://cdn.jsdelivr.net/npm/motion@13.4.0/+esm";
+
+
+/* =========================================================
+   FLORISBELA — MOTION SYSTEM
+   ========================================================= */
+
+const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+).matches;
+
+const isTouch = window.matchMedia(
+    "(pointer: coarse)"
+).matches;
+
+
+/* =========================================================
+   DEBUG
+   ========================================================= */
+
+console.log("🌸 Florisbela Motion carregado.");
+console.log("prefers-reduced-motion:", reduceMotion);
+console.log("pointer coarse:", isTouch);
+
+
+/* =========================================================
+   NAVEGAÇÃO
+   ========================================================= */
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+
+    link.addEventListener("click", (event) => {
+
+        const id = link.getAttribute("href");
+
+        if (!id || id === "#") {
+            return;
+        }
+
+        const target = document.querySelector(id);
+
+        if (!target) {
+            return;
+        }
+
+        event.preventDefault();
+
+        target.scrollIntoView({
+            behavior: reduceMotion ? "auto" : "smooth",
+            block: "start"
+        });
+
+    });
+
 });
 
-function initHeroVideo() {
-    const video = document.querySelector(".hero-video");
-    if (!video) return;
 
-    video.muted = true;
-    video.defaultMuted = true;
-    video.playsInline = true;
+/* =========================================================
+   VÍDEOS
+   ---------------------------------------------------------
+   Controla reprodução conforme o vídeo entra/sai da tela.
+   ========================================================= */
 
-    const playVideo = () => {
-        if (video.paused) {
-            video.play().catch(() => {
-                console.warn("Florisbela: reprodução automática bloqueada.");
-            });
-        }
-    };
+const videos = document.querySelectorAll("video");
 
-    if (video.readyState >= 2) {
-        playVideo();
-    } else {
-        video.addEventListener("loadeddata", playVideo, { once: true });
-        video.addEventListener("canplay", playVideo, { once: true });
-    }
+const videoObserver = new IntersectionObserver(
+    (entries) => {
 
-    document.addEventListener("click", playVideo, { once: true });
+        entries.forEach((entry) => {
 
-    document.addEventListener("visibilitychange", () => {
-        if (!document.hidden) playVideo();
-    });
-}
+            const video = entry.target;
 
-function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach((link) => {
-        link.addEventListener("click", (event) => {
-            const selector = link.getAttribute("href");
-            if (!selector || selector === "#") return;
+            if (entry.isIntersecting) {
 
-            const target = document.querySelector(selector);
-            if (!target) return;
+                video.play().catch(() => { });
 
-            event.preventDefault();
-            target.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
+            } else {
+
+                video.pause();
+
+            }
+
         });
-    });
-}
 
-function initFlorisbelaAnimations() {
-    if (typeof anime === "undefined") return;
-
-    const isPerfumePage = document.querySelector(".perfume-hero");
-
-    if (isPerfumePage) {
-        initPerfumePageAnimations();
-    } else {
-        initHomeAnimations();
+    },
+    {
+        threshold: 0.15
     }
-}
+);
 
-function initPerfumePageAnimations() {
-    document.body.classList.add("anime-ready");
+videos.forEach((video) => {
+    videoObserver.observe(video);
+});
 
-    const heroImage = document.querySelector(".perfume-hero__image");
-    const heroOverlay = document.querySelector(".perfume-hero__overlay");
-    const eyebrow = document.querySelector(".perfume-hero__eyebrow");
-    const title = document.querySelector(".perfume-hero__content h1");
-    const description = document.querySelector(".perfume-hero__content p");
 
-    const introItems = document.querySelectorAll(
-        ".perfume-intro .section-eyebrow, .perfume-intro h2, .perfume-intro p"
+/* =========================================================
+   HERO — ENTRADA
+   ========================================================= */
+
+const hero = document.querySelector(".hero");
+
+if (hero) {
+
+    const heroItems = hero.querySelectorAll(
+        ".hero-center > *"
     );
 
-    const catalogHeader = document.querySelector(".perfume-catalog__header");
-    const cards = document.querySelectorAll(".perfume-card");
-    const cta = document.querySelector(".perfume-cta__content");
-    const footer = document.querySelector(".site-footer__inner");
+    if (heroItems.length) {
 
-    const heroTimeline = anime.timeline({
-        easing: "easeOutExpo"
-    });
+        if (reduceMotion) {
 
-    heroTimeline
-        .add({
-            targets: heroImage,
-            opacity: [0, 1],
-            scale: [1.15, 1],
-            duration: 1500
-        })
-        .add({
-            targets: heroOverlay,
-            opacity: [0, 1],
-            duration: 900
-        }, "-=1050")
-        .add({
-            targets: eyebrow,
-            opacity: [0, 1],
-            translateY: [18, 0],
-            duration: 700
-        }, "-=350")
-        .add({
-            targets: title,
-            opacity: [0, 1],
-            translateY: [42, 0],
-            duration: 950
-        }, "-=520")
-        .add({
-            targets: description,
-            opacity: [0, 1],
-            translateY: [24, 0],
-            duration: 750
-        }, "-=620");
-
-    initReveal(introItems, {
-        translateY: 42,
-        duration: 900,
-        stagger: 110
-    });
-
-    initReveal(catalogHeader, {
-        translateY: 35,
-        duration: 800
-    });
-
-    initReveal(cards, {
-        translateY: 55,
-        scale: [0.985, 1],
-        duration: 850,
-        stagger: 100
-    });
-
-    initReveal(cta, {
-        translateY: 45,
-        duration: 900
-    });
-
-    initReveal(footer, {
-        translateY: 25,
-        duration: 700
-    });
-}
-
-function initReveal(targets, options = {}) {
-    if (!targets || (targets.length === 0 && !targets.nodeType)) return;
-
-    const elementList = targets.nodeType ? [targets] : Array.from(targets);
-    elementList.forEach((element) => element.classList.add("ff-reveal"));
-
-    const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-
-            anime({
-                targets: entry.target,
-                opacity: [0, 1],
-                translateY: options.translateY ? [options.translateY, 0] : [35, 0],
-                scale: options.scale ?? [1, 1],
-                duration: options.duration ?? 800,
-                easing: "easeOutExpo",
-                delay: options.delay ?? 0
+            heroItems.forEach((item) => {
+                item.style.opacity = "1";
             });
 
-            obs.unobserve(entry.target);
+        } else {
+
+            animate(
+                heroItems,
+                {
+                    opacity: [0, 1],
+                    y: [24, 0]
+                },
+                {
+                    duration: 1.1,
+                    delay: stagger(0.12),
+                    ease: [0.22, 1, 0.36, 1]
+                }
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   HERO VIDEO — PARALLAX
+   ========================================================= */
+
+const heroMedia = document.querySelector(
+    ".hero-media"
+);
+
+const heroVideo = heroMedia?.querySelector(
+    "video"
+);
+
+if (
+    heroMedia &&
+    heroVideo &&
+    !reduceMotion &&
+    !isTouch
+) {
+
+    pointerMotion(
+        heroMedia,
+        heroVideo,
+        {
+            x: 5,
+            y: 4,
+            scale: 1.015
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+   ========================================================= */
+
+const revealGroups = [
+
+    {
+        selector: ".section-marker",
+        y: 20,
+        duration: 0.8
+    },
+
+    {
+        selector: ".intro-title-wrap",
+        y: 35,
+        duration: 0.9
+    },
+
+    {
+        selector: ".intro-media",
+        y: 35,
+        duration: 0.9
+    },
+
+    {
+        selector: ".collection-heading",
+        y: 30,
+        duration: 0.8
+    },
+
+    {
+        selector: ".collection-card",
+        y: 40,
+        duration: 0.9
+    },
+
+    {
+        selector: ".notes-copy",
+        y: 35,
+        duration: 0.9
+    },
+
+    {
+        selector: ".note-card",
+        y: 30,
+        duration: 0.8
+    },
+
+    {
+        selector: ".final-cta-inner",
+        y: 40,
+        duration: 1
+    },
+
+    {
+        selector: ".site-footer",
+        y: 25,
+        duration: 0.8
+    }
+
+];
+
+
+if (!reduceMotion) {
+
+    revealGroups.forEach((group) => {
+
+        const elements =
+            document.querySelectorAll(
+                group.selector
+            );
+
+        if (!elements.length) {
+            return;
+        }
+
+        elements.forEach((element) => {
+
+            element.style.opacity = "0";
+
+            animate(
+                element,
+                {
+                    opacity: [0, 1],
+                    y: [group.y, 0]
+                },
+                {
+                    duration: group.duration,
+                    ease: [0.22, 1, 0.36, 1],
+                    autoplay: false
+                }
+            ).stop();
+
         });
-    }, {
-        threshold: 0.14,
-        rootMargin: "0px 0px -8% 0px"
+
     });
 
-    elementList.forEach((element) => observer.observe(element));
 }
 
-function initHomeAnimations() {
-    const hero = document.querySelector(".hero");
-    if (!hero) return;
 
-    const content = hero.querySelector(".hero-content");
-    const eyebrow = hero.querySelector(".eyebrow");
-    const title = hero.querySelector("h1");
-    const text = hero.querySelector(".hero-text");
-    const actions = hero.querySelector(".hero-actions");
+/* =========================================================
+   SCROLL REVEAL — OBSERVER
+   ========================================================= */
 
-    if (!content || !eyebrow || !title) return;
+if (!reduceMotion) {
 
-    anime.timeline({ easing: "easeOutExpo" })
-        .add({
-            targets: content,
-            opacity: [0, 1],
-            duration: 900
-        })
-        .add({
-            targets: eyebrow,
-            opacity: [0, 1],
-            translateY: [18, 0],
-            duration: 650
-        }, "-=600")
-        .add({
-            targets: title,
-            opacity: [0, 1],
-            translateY: [38, 0],
-            duration: 900
-        }, "-=480")
-        .add({
-            targets: [text, actions].filter(Boolean),
-            opacity: [0, 1],
-            translateY: [22, 0],
-            duration: 700,
-            delay: anime.stagger(90)
-        }, "-=600");
+    const revealObserver =
+        new IntersectionObserver(
+            (entries, observer) => {
 
-    initReveal(document.querySelectorAll(".intro-content, .section-heading, .collection-card, .note-row, .final-cta-inner"), {
-        translateY: 40,
-        duration: 850
+                entries.forEach((entry) => {
+
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+
+                    const element =
+                        entry.target;
+
+                    const selector =
+                        [...revealGroups].find(
+                            (group) =>
+                                element.matches(
+                                    group.selector
+                                )
+                        );
+
+                    if (!selector) {
+                        observer.unobserve(element);
+                        return;
+                    }
+
+                    animate(
+                        element,
+                        {
+                            opacity: [0, 1],
+                            y: [selector.y, 0]
+                        },
+                        {
+                            duration: selector.duration,
+                            ease: [
+                                0.22,
+                                1,
+                                0.36,
+                                1
+                            ]
+                        }
+                    );
+
+                    observer.unobserve(element);
+
+                });
+
+            },
+            {
+                threshold: 0.12,
+                rootMargin: "0px 0px -8% 0px"
+            }
+        );
+
+
+    revealGroups.forEach((group) => {
+
+        const elements =
+            document.querySelectorAll(
+                group.selector
+            );
+
+        elements.forEach((element) => {
+
+            revealObserver.observe(element);
+
+        });
+
     });
 
-    initReveal(document.querySelectorAll(".collection-card"), {
-        translateY: 45,
-        duration: 750,
-        stagger: 120
-    });
 }
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+if (reduceMotion) {
+
+    document
+        .querySelectorAll(
+            [
+                ".section-marker",
+                ".intro-title-wrap",
+                ".intro-media",
+                ".collection-heading",
+                ".collection-card",
+                ".notes-copy",
+                ".note-card",
+                ".final-cta-inner",
+                ".site-footer"
+            ].join(",")
+        )
+        .forEach((element) => {
+
+            element.style.opacity = "1";
+            element.style.transform = "none";
+
+        });
+
+}
+
+
+/* =========================================================
+   ESSÊNCIA — VIDEO PARALLAX
+   ========================================================= */
+
+const essenceMedia = document.querySelector(
+    ".intro-media"
+);
+
+const essenceVideo = essenceMedia?.querySelector(
+    "video"
+);
+
+if (
+    essenceMedia &&
+    essenceVideo &&
+    !reduceMotion &&
+    !isTouch
+) {
+
+    pointerMotion(
+        essenceMedia,
+        essenceVideo,
+        {
+            x: 11,
+            y: 7,
+            scale: 1.025
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ESSÊNCIA — TITLE PARALLAX
+   ========================================================= */
+
+const essenceTitle = document.querySelector(
+    ".intro-title-wrap"
+);
+
+if (
+    essenceTitle &&
+    !reduceMotion &&
+    !isTouch
+) {
+
+    pointerMotion(
+        essenceTitle,
+        essenceTitle,
+        {
+            x: 3,
+            y: 2,
+            scale: 1
+        }
+    );
+
+}
+
+
+/* =========================================================
+   COLLECTION
+   ========================================================= */
+
+const collectionCards =
+    document.querySelectorAll(
+        ".collection-card"
+    );
+
+
+collectionCards.forEach((card) => {
+
+    const video =
+        card.querySelector("video");
+
+    /*
+     * CORREÇÃO:
+     *
+     * Antes:
+     * .collection-card-copy
+     *
+     * HTML real:
+     * .card-copy
+     */
+
+    const content =
+        card.querySelector(".card-copy");
+
+
+    if (
+        reduceMotion ||
+        isTouch
+    ) {
+        return;
+    }
+
+
+    /* -----------------------------------------------------
+       VIDEO
+       ----------------------------------------------------- */
+
+    if (video) {
+
+        pointerMotion(
+            card,
+            video,
+            {
+                x: 8,
+                y: 6,
+                scale: 1.035
+            }
+        );
+
+    }
+
+
+    /* -----------------------------------------------------
+       TEXTO
+       ----------------------------------------------------- */
+
+    if (content) {
+
+        pointerMotion(
+            card,
+            content,
+            {
+                x: 3,
+                y: 2,
+                scale: 1
+            }
+        );
+
+    }
+
+});
+
+
+/* =========================================================
+   COLLECTION — HOVER EXTRA
+   ========================================================= */
+
+collectionCards.forEach((card) => {
+
+    if (reduceMotion || isTouch) {
+        return;
+    }
+
+    const arrow =
+        card.querySelector(".card-copy b i");
+
+    if (!arrow) {
+        return;
+    }
+
+
+    card.addEventListener(
+        "pointerenter",
+        () => {
+
+            animate(
+                arrow,
+                {
+                    x: 6
+                },
+                {
+                    duration: 0.3,
+                    ease: [0.22, 1, 0.36, 1]
+                }
+            );
+
+        }
+    );
+
+
+    card.addEventListener(
+        "pointerleave",
+        () => {
+
+            animate(
+                arrow,
+                {
+                    x: 0
+                },
+                {
+                    type: "spring",
+                    stiffness: 250,
+                    damping: 18
+                }
+            );
+
+        }
+    );
+
+});
+
+
+/* =========================================================
+   NOTES
+   ========================================================= */
+
+const notes =
+    document.querySelectorAll(
+        ".note-card"
+    );
+
+
+notes.forEach((note) => {
+
+    const art =
+        note.querySelector(".note-art");
+
+
+    if (
+        !art ||
+        reduceMotion ||
+        isTouch
+    ) {
+        return;
+    }
+
+
+    let rect = null;
+
+
+    /* -----------------------------------------------------
+       ENTER
+       ----------------------------------------------------- */
+
+    note.addEventListener(
+        "pointerenter",
+        () => {
+
+            rect =
+                note.getBoundingClientRect();
+
+            animate(
+                art,
+                {
+                    scale: 1.035
+                },
+                {
+                    duration: 0.45,
+                    ease: [
+                        0.22,
+                        1,
+                        0.36,
+                        1
+                    ]
+                }
+            );
+
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       MOVE
+       ----------------------------------------------------- */
+
+    note.addEventListener(
+        "pointermove",
+        (event) => {
+
+            if (!rect) {
+
+                rect =
+                    note.getBoundingClientRect();
+
+            }
+
+
+            const px =
+                (event.clientX - rect.left) /
+                rect.width -
+                0.5;
+
+
+            const py =
+                (event.clientY - rect.top) /
+                rect.height -
+                0.5;
+
+
+            animate(
+                art,
+                {
+                    x: px * 5,
+                    y: py * 4
+                },
+                {
+                    duration: 0.25,
+                    ease: "easeOut"
+                }
+            );
+
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       LEAVE
+       ----------------------------------------------------- */
+
+    note.addEventListener(
+        "pointerleave",
+        () => {
+
+            animate(
+                art,
+                {
+                    x: 0,
+                    y: 0,
+                    scale: 1
+                },
+                {
+                    type: "spring",
+                    stiffness: 180,
+                    damping: 22
+                }
+            );
+
+            rect = null;
+
+        }
+    );
+
+});
+
+
+/* =========================================================
+   BOTÕES MAGNÉTICOS
+   =========================================================
+   
+   CORREÇÃO:
+   
+   HTML usa:
+   
+   .button
+   .header-cta
+   
+   Não:
+   
+   .btn
+   .hero-cta
+   ========================================================= */
+
+const magneticElements =
+    document.querySelectorAll(
+        ".button, .header-cta"
+    );
+
+
+magneticElements.forEach((element) => {
+
+    if (
+        reduceMotion ||
+        isTouch
+    ) {
+        return;
+    }
+
+    magnetic(
+        element,
+        5
+    );
+
+});
+
+
+/* =========================================================
+   PRESS DOS BOTÕES
+   ========================================================= */
+
+const buttons =
+    document.querySelectorAll(
+        ".button, .header-cta"
+    );
+
+
+buttons.forEach((button) => {
+
+    if (reduceMotion) {
+        return;
+    }
+
+
+    button.addEventListener(
+        "pointerdown",
+        () => {
+
+            animate(
+                button,
+                {
+                    scale: 0.97
+                },
+                {
+                    duration: 0.12
+                }
+            );
+
+        }
+    );
+
+
+    button.addEventListener(
+        "pointerup",
+        () => {
+
+            animate(
+                button,
+                {
+                    scale: 1
+                },
+                {
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 20
+                }
+            );
+
+        }
+    );
+
+
+    button.addEventListener(
+        "pointerleave",
+        () => {
+
+            animate(
+                button,
+                {
+                    scale: 1
+                },
+                {
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 20
+                }
+            );
+
+        }
+    );
+
+});
+
+
+/* =========================================================
+   FINAL CTA
+   ========================================================= */
+
+const finalCTA =
+    document.querySelector(
+        ".final-cta"
+    );
+
+
+if (
+    finalCTA &&
+    !reduceMotion &&
+    !isTouch
+) {
+
+    /*
+     * CORREÇÃO:
+     *
+     * HTML real:
+     * .final-cta-inner
+     *
+     * Não:
+     * .final-cta-content
+     */
+
+    const content =
+        finalCTA.querySelector(
+            ".final-cta-inner"
+        );
+
+
+    if (content) {
+
+        pointerMotion(
+            finalCTA,
+            content,
+            {
+                x: 4,
+                y: 3,
+                scale: 1
+            }
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   POINTER MOTION
+   ========================================================= */
+
+function pointerMotion(
+    container,
+    target,
+    options = {}
+) {
+
+    const {
+        x = 8,
+        y = 6,
+        scale = 1
+    } = options;
+
+
+    let rect = null;
+
+
+    /* -----------------------------------------------------
+       ENTER
+       ----------------------------------------------------- */
+
+    container.addEventListener(
+        "pointerenter",
+        () => {
+
+            rect =
+                container.getBoundingClientRect();
+
+
+            if (scale !== 1) {
+
+                animate(
+                    target,
+                    {
+                        scale
+                    },
+                    {
+                        duration: 0.5,
+                        ease: [
+                            0.22,
+                            1,
+                            0.36,
+                            1
+                        ]
+                    }
+                );
+
+            }
+
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       MOVE
+       ----------------------------------------------------- */
+
+    container.addEventListener(
+        "pointermove",
+        (event) => {
+
+            if (!rect) {
+
+                rect =
+                    container.getBoundingClientRect();
+
+            }
+
+
+            const px =
+                (event.clientX - rect.left) /
+                rect.width -
+                0.5;
+
+
+            const py =
+                (event.clientY - rect.top) /
+                rect.height -
+                0.5;
+
+
+            animate(
+                target,
+                {
+                    x: px * x,
+                    y: py * y
+                },
+                {
+                    duration: 0.25,
+                    ease: "easeOut"
+                }
+            );
+
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       LEAVE
+       ----------------------------------------------------- */
+
+    container.addEventListener(
+        "pointerleave",
+        () => {
+
+            animate(
+                target,
+                {
+                    x: 0,
+                    y: 0,
+                    scale: 1
+                },
+                {
+                    type: "spring",
+                    stiffness: 180,
+                    damping: 22
+                }
+            );
+
+
+            rect = null;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   MAGNETIC
+   ========================================================= */
+
+function magnetic(
+    element,
+    strength = 5
+) {
+
+    let rect = null;
+
+
+    /* -----------------------------------------------------
+       ENTER
+       ----------------------------------------------------- */
+
+    element.addEventListener(
+        "pointerenter",
+        () => {
+
+            rect =
+                element.getBoundingClientRect();
+
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       MOVE
+       ----------------------------------------------------- */
+
+    element.addEventListener(
+        "pointermove",
+        (event) => {
+
+            if (!rect) {
+
+                rect =
+                    element.getBoundingClientRect();
+
+            }
+
+
+            const px =
+                (event.clientX - rect.left) /
+                rect.width -
+                0.5;
+
+
+            const py =
+                (event.clientY - rect.top) /
+                rect.height -
+                0.5;
+
+
+            animate(
+                element,
+                {
+                    x: px * strength,
+                    y: py * strength
+                },
+                {
+                    duration: 0.22,
+                    ease: "easeOut"
+                }
+            );
+
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       LEAVE
+       ----------------------------------------------------- */
+
+    element.addEventListener(
+        "pointerleave",
+        () => {
+
+            animate(
+                element,
+                {
+                    x: 0,
+                    y: 0
+                },
+                {
+                    type: "spring",
+                    stiffness: 180,
+                    damping: 22
+                }
+            );
+
+
+            rect = null;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   FIM
+   ========================================================= */
+
+console.log(
+    "🌸 Florisbela Motion inicializado."
+);
