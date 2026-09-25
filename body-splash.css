@@ -10,22 +10,11 @@
     overflow-x: hidden
 }
 
-.body-hero {
-    min-height: 82vh;
-    position: relative;
-    display: flex;
-    align-items: flex-end;
-    overflow: hidden;
-    isolation: isolate;
-    background: radial-gradient(circle at 76% 38%, rgba(213, 165, 76, .13), transparent 28%), linear-gradient(180deg, #080706, #0c0907)
-}
+/* (moved to final composition block below) */
 
-.body-hero:before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(90deg, rgba(8, 7, 6, .97), transparent 60%), linear-gradient(180deg, transparent 55%, rgba(8, 7, 6, .82))
+
+.body-hero::before {
+    display: none;
 }
 
 .body-hero:after {
@@ -40,12 +29,7 @@
     animation: bs-ring 14s ease-in-out infinite alternate
 }
 
-.body-hero-content {
-    width: min(1380px, 100%);
-    margin: auto;
-    padding: 0 30px 92px;
-    z-index: 2
-}
+/* (moved to final composition block below) */
 
 .body-eyebrow {
     display: block;
@@ -233,6 +217,7 @@
 .body-card-image {
     position: relative;
     width: 100%;
+    aspect-ratio: 3 / 2;
     overflow: hidden;
     background: #11100e;
     border: 1px solid rgba(244, 239, 231, .08)
@@ -241,8 +226,10 @@
 .body-card-image img {
     display: block;
     width: 100%;
-    height: auto;
-    max-width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center;
     transition: filter 1.15s ease;
     will-change: transform, filter
 }
@@ -321,15 +308,16 @@
 .body-store {
     position: relative;
     width: min(1380px, calc(100% - 60px));
-    min-height: 560px;
-    margin: 0 auto 145px;
-    padding: 80px clamp(35px, 7vw, 105px);
-    display: flex;
-    align-items: center;
+
+    margin: 110px auto 145px;
+    padding: 0;
+
     overflow: hidden;
     isolation: isolate;
+
     border: 1px solid rgba(213, 165, 76, .2);
-    background: radial-gradient(circle at 78% 40%, rgba(213, 165, 76, .14), transparent 24%), linear-gradient(120deg, #0c0907, #15100b 52%, #0a0806)
+
+    background: #0c0907;
 }
 
 .body-store:before {
@@ -578,8 +566,11 @@
     }
 
     .body-gallery-grid {
-        grid-template-columns: 1fr;
-        gap: 48px
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        row-gap: 150px;
+        column-gap: 22px;
+        align-items: start;
     }
 
     .body-card--wide {
@@ -640,4 +631,247 @@
         animation-iteration-count: 1 !important;
         transition-duration: .01ms !important
     }
+}
+
+/* =========================================
+   ASSET FINAL — BODY STORE
+   ========================================= */
+
+.body-store>.store-f {
+    position: absolute;
+    top: 56%;
+    right: 0;
+    left: auto;
+
+    width: 58%;
+    height: auto;
+
+    max-width: none;
+    max-height: 100%;
+
+    transform: translateY(-50%);
+
+    object-fit: cover;
+    object-position: right center;
+
+    background: none;
+
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* =========================================
+   BODY STORE — ASSET COMPLETO
+   ========================================= */
+
+.body-store {
+    position: relative;
+    width: min(1380px, calc(100% - 60px));
+    height: auto;
+    min-height: 0;
+
+    margin: 150px auto 145px;
+    padding: 0;
+
+    overflow: hidden;
+    isolation: isolate;
+
+    border: 1px solid rgba(213, 165, 76, .2);
+
+    background: #0c0907;
+}
+
+.body-store::before,
+.body-store::after {
+    display: none;
+}
+
+.body-store .store-asset {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    max-width: none;
+
+    margin: 0;
+    padding: 0;
+
+    object-fit: cover;
+    object-position: center;
+
+    position: relative;
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+/* =========================================================
+   BODY HERO — COMPOSIÇÃO FINAL
+   ========================================================= */
+
+.body-hero {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: #000;
+}
+
+
+.body-hero-image {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    margin: 0;
+    padding: 0;
+}
+
+/* Área exclusiva do asset */
+
+.body-hero-visual {
+    position: absolute;
+
+    top: 22vh;
+    right: 0;
+    bottom: 0;
+
+    width: 55%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 1;
+    pointer-events: none;
+
+    overflow: hidden;
+}
+
+/* Asset completo — SEM CROP */
+
+
+.body-hero-visual img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    object-fit: contain;
+    object-position: right bottom;
+
+    margin: 0;
+    padding: 0;
+}
+
+/* =========================================================
+   BODY HERO — VÍDEO CINEMATOGRÁFICO
+   ========================================================= */
+
+.body-hero-video {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+    outline: 0;
+
+    background: #080706;
+
+    pointer-events: none;
+}
+
+
+/* Texto permanece acima da composição */
+.body-hero-content {
+    position: relative;
+    z-index: 3;
+
+    width: min(1380px, 100%);
+    margin: 0 auto;
+
+    padding: 65px 30px 72px;
+}
+
+/* Scroll fica acima do asset */
+.body-scroll {
+    z-index: 4;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 820px) {
+
+    .body-hero {
+        min-height: 88vh;
+    }
+
+    .body-hero-visual {
+        top: auto;
+        right: 0;
+        bottom: 0;
+
+        width: 100%;
+        height: 48%;
+
+        align-items: flex-end;
+        justify-content: center;
+
+        overflow: hidden;
+    }
+
+    .body-hero-visual img {
+        width: 100%;
+        height: auto;
+
+        max-width: 100%;
+        max-height: 100%;
+
+        object-fit: contain;
+        object-position: center bottom;
+    }
+
+    .body-hero-video {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .body-hero-content {
+        position: relative;
+        z-index: 3;
+
+        padding: 80px 18px 45%;
+    }
+}
+
+
+/* =========================================================
+   AJUSTE FINO — HERO EDITORIAL
+   ========================================================= */
+
+/* Asset: mais centralizado horizontalmente */
+.body-hero-visual {
+    right: 7% !important;
+}
+
+/* Texto: descer sem alterar posição horizontal */
+.body-hero-content {
+    padding-top: 150px !important;
 }
