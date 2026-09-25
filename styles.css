@@ -1354,3 +1354,27 @@ em {
     }
 
 }
+
+/* ================================
+   CONTATO — WHATSAPP + INSTAGRAM
+   ================================ */
+
+.contact-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+@media (max-width: 600px) {
+    .contact-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .contact-actions .button {
+        width: 100%;
+        justify-content: center;
+    }
+}
