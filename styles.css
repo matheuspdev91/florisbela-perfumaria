@@ -1030,22 +1030,55 @@ em {
     }
 }
 
-/* ==========================================================
-   RESPONSIVE
-   ========================================================== */
-@media (max-width: 992px) {
+/* =========================================================
+   FLORISBELA — RESPONSIVE SYSTEM
+   Single source of truth
+   Reference: ContentFlow mobile strategy
+   Targets: 360x800 / 393x873
+   ========================================================= */
+
+/* ---------- GLOBAL MOBILE SAFETY ---------- */
+
+@media (max-width: 900px) {
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
+    }
+
+    .container {
+        width: min(var(--container), calc(100% - 32px));
+    }
+
     .site-header {
-        grid-template-columns: 1fr auto;
-        gap: var(--space-4);
-        padding-inline: var(--space-4);
+        grid-template-columns: 1fr;
+        height: auto;
+        padding: 15px 20px;
+        gap: 15px;
+        justify-items: center;
     }
 
     .main-nav {
-        display: none;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .main-nav a {
+        font-size: 10px;
+    }
+
+    .brand {
+        width: 180px;
+        margin: 0 auto;
     }
 
     .header-cta {
-        justify-self: end;
+        font-size: 9px;
     }
 
     .intro-grid,
@@ -1055,326 +1088,217 @@ em {
 
     .intro-media {
         width: 100%;
-        min-height: 320px;
-        opacity: .78;
-        mask-image: linear-gradient(to right, transparent, black 8%);
-        -webkit-mask-image: linear-gradient(to right, transparent, black 8%);
-    }
-
-    .notes-list {
-        grid-template-columns: repeat(2, 1fr);
     }
 }
 
+/* ---------- TABLET / MOBILE ---------- */
+
 @media (max-width: 768px) {
+
+    /* Header */
     .site-header {
-        height: var(--header-height);
+        position: absolute;
+        height: auto;
+        min-height: 64px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 15px 18px;
+        gap: 12px;
     }
 
     .brand {
-        width: 180px;
+        width: 145px;
+        max-width: 145px;
+        flex: 0 0 auto;
     }
 
     .header-cta {
-        font-size: 9px;
+        display: none !important;
     }
 
+    /* Hero */
     .hero {
-        min-height: calc(100svh - var(--header-height));
+        min-height: 100svh;
+        min-height: 100dvh;
     }
 
-    .hero h1 {
-        font-size: clamp(55px, 12vw, 88px);
+    .hero-media video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover !important;
+        object-position: 58% center;
     }
 
     .hero-center {
-        margin-top: var(--space-6);
-    }
-
-    .collection-grid {
-        grid-template-columns: 1fr;
-        padding-inline: 18px;
-    }
-
-    .collection-card--body {
-        grid-column: auto;
-
-        width: 100%;
-        aspect-ratio: 1 / 1;
-
-        min-height: 0;
-        height: auto;
-    }
-
-    .collection-card--body>video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-    }
-
-    .site-footer {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-}
-
-@media (max-width: 600px) {
-    .page-pad {
-        padding-inline: var(--space-4);
-    }
-
-    .desktop-only {
-        display: none;
-    }
-
-    .hero {
-        min-height: 680px;
+        width: calc(100% - 32px);
+        max-width: 420px;
+        margin-top: 32px;
     }
 
     .hero h1 {
-        font-size: clamp(48px, 15vw, 70px);
+        font-size: clamp(46px, 12vw, 72px);
+        line-height: .92;
+    }
+
+    .hero-lead {
+        width: min(100%, 330px);
+        margin-inline: auto;
     }
 
     .hero-actions {
+        width: 100%;
+        max-width: 360px;
+        margin-inline: auto;
         flex-direction: column;
         align-items: stretch;
     }
 
-    .button {
+    .hero-actions .btn {
         width: 100%;
+        max-width: none;
     }
 
-    .intro {
-        min-height: 520px;
-    }
-
-    .intro-media {
+    /* Collection */
+    .collection-grid {
         width: 100%;
-        min-height: 300px;
-        opacity: .72;
-        mask-image: none;
-        -webkit-mask-image: none;
+        padding-inline: 16px;
+        grid-template-columns: 1fr;
+        gap: 16px;
     }
 
+    .collection-card {
+        width: 100%;
+        min-height: 0;
+        aspect-ratio: 1 / 1;
+    }
+
+    .collection-card>video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover !important;
+        object-position: center;
+    }
+
+    .collection-card--women > video {
+        object-position: right center !important;
+    }
+
+    .collection-card--body {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+    }
+
+    /* Intro media */
+    .intro-media,
+    .intro-media img,
     .intro-media video {
-        min-height: 300px;
+        width: 100%;
+        max-width: 100%;
     }
 
-    .notes-list {
-        grid-template-columns: 1fr 1fr;
+    .intro-media img,
+    .intro-media video {
+        height: auto;
+        object-fit: contain;
     }
 
-    .note-card {
-        min-height: 220px;
-    }
-}
-
-/* =========================================================
-   FLORISBELA — NOTAS OLFATIVAS / 3D ASSETS
-   ========================================================= */
-
-.notes-list {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 14px;
-}
-
-.note-card {
-    position: relative;
-    overflow: hidden;
-    min-height: 390px;
-    isolation: isolate;
-    background: #0a0807;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-}
-
-/* =========================================================
-   ASSET 3D
-   ========================================================= */
-
-.note-art {
-    position: absolute;
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-
-    transform-origin: center center;
-
-    will-change: transform;
-
-    z-index: -2;
-}
-
-/* =========================================================
-   IDENTIDADE DOS ASSETS
-   ========================================================= */
-
-.note-art--citrica {
-    background-position: center center;
-}
-
-.note-art--floral {
-    background-position: center center;
-}
-
-.note-art--madeirada {
-    background-position: center center;
-}
-
-.note-art--oriental {
-    background-position: center center;
-}
-
-
-/* =========================================================
-   PROFUNDIDADE / LEITURA DO TEXTO
-   ========================================================= */
-
-.note-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background:
-        linear-gradient(to bottom,
-            rgba(0, 0, 0, 0.02) 20%,
-            rgba(0, 0, 0, 0.08) 42%,
-            rgba(0, 0, 0, 0.58) 72%,
-            rgba(0, 0, 0, 0.94) 100%);
-
-    z-index: -1;
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   TEXTO
-   ========================================================= */
-
-.note-card>div:last-child {
-    position: absolute;
-
-    left: 26px;
-    right: 20px;
-    bottom: 24px;
-
-    z-index: 2;
-
-    pointer-events: none;
-}
-
-.note-card>div:last-child span {
-    display: block;
-
-    margin-bottom: 9px;
-
-    font-family: "Manrope", sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-
-    color: #fff;
-}
-
-.note-card>div:last-child small {
-    display: block;
-
-    font-family: "Manrope", sans-serif;
-    font-size: 13px;
-    line-height: 1.4;
-
-    color: rgba(216, 166, 58, 0.95);
-}
-
-
-/* =========================================================
-   HOVER
-   ========================================================= */
-
-@media (hover: hover) and (pointer: fine) {
-
-    .note-card {
-        transition:
-            border-color 0.45s ease,
-            transform 0.45s ease;
-    }
-
-    .note-card:hover {
-        border-color: rgba(216, 166, 58, 0.42);
-    }
-
-}
-
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 1000px) {
-
+    /* Notes */
     .notes-list {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .note-card {
-        min-height: 360px;
+    /* Footer */
+    .site-footer {
+        grid-template-columns: 1fr;
+        gap: 24px;
     }
-
 }
 
+/* ---------- SMALL MOBILE ---------- */
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
+@media (max-width: 480px) {
 
-@media (max-width: 600px) {
+    .site-header {
+        height: auto;
+        min-height: 60px;
+        padding: 15px 14px;
+    }
 
-    .notes-list {
-        grid-template-columns: 1fr;
+    .brand {
+        width: 132px;
+        max-width: 132px;
+    }
+
+    .container {
+        width: min(var(--container), calc(100% - 24px));
+    }
+
+    .hero-center {
+        width: calc(100% - 24px);
+        margin-top: 24px;
+    }
+
+    .hero h1 {
+        font-size: clamp(42px, 12vw, 58px);
+    }
+
+    .hero-lead {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .hero-actions {
+        max-width: 100%;
+    }
+
+    .collection-grid {
+        padding-inline: 12px;
         gap: 14px;
     }
 
-    .note-card {
-        min-height: 420px;
+    .collection-card {
+        border-radius: 14px;
     }
 
-    .note-card>div:last-child {
-        left: 22px;
-        right: 18px;
-        bottom: 22px;
+    .notes-list {
+        gap: 18px 12px;
     }
-
 }
 
-/* ================================
-   CONTATO — WHATSAPP + INSTAGRAM
-   ================================ */
+/* ---------- VERY SMALL MOBILE ---------- */
 
-.contact-actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 32px;
-}
+@media (max-width: 380px) {
 
-@media (max-width: 600px) {
-    .contact-actions {
-        flex-direction: column;
-        width: 100%;
+    .site-header {
+        height: auto;
+        min-height: 58px;
+        padding: 15px 12px;
     }
 
-    .contact-actions .button {
-        width: 100%;
-        justify-content: center;
+    .brand {
+        width: 126px;
+        max-width: 126px;
+    }
+
+    .hero-center {
+        width: calc(100% - 20px);
+    }
+
+    .hero h1 {
+        font-size: 43px;
+    }
+
+    .hero-lead {
+        font-size: 13px;
+    }
+
+    .collection-grid {
+        padding-inline: 10px;
+    }
+
+    .notes-list {
+        gap: 16px 10px;
     }
 }
