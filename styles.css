@@ -1031,13 +1031,10 @@ em {
 }
 
 /* =========================================================
-   FLORISBELA — RESPONSIVE SYSTEM
+   FLORISBELA — RESPONSIVE
    Single source of truth
-   Reference: ContentFlow mobile strategy
-   Targets: 360x800 / 393x873
+   Reference: 360x800 / 393x873
    ========================================================= */
-
-/* ---------- GLOBAL MOBILE SAFETY ---------- */
 
 @media (max-width: 900px) {
 
@@ -1053,64 +1050,33 @@ em {
         width: min(var(--container), calc(100% - 32px));
     }
 
+    /* HEADER */
+
     .site-header {
-        grid-template-columns: 1fr;
-        height: auto;
-        padding: 15px 20px;
-        gap: 15px;
-        justify-items: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 64px;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0 20px;
+        gap: 16px;
     }
 
     .main-nav {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-    }
-
-    .main-nav a {
-        font-size: 10px;
-    }
-
-    .brand {
-        width: 180px;
-        margin: 0 auto;
-    }
-
-    .header-cta {
-        font-size: 9px;
-    }
-
-    .intro-grid,
-    .notes-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .intro-media {
-        width: 100%;
-    }
-}
-
-/* ---------- TABLET / MOBILE ---------- */
-
-@media (max-width: 768px) {
-
-    /* Header */
-    .site-header {
-        position: absolute;
-        height: auto;
-        min-height: 64px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 15px 18px;
-        gap: 12px;
+        display: none !important;
     }
 
     .brand {
         width: 145px;
         max-width: 145px;
+        margin: 0;
         flex: 0 0 auto;
     }
 
@@ -1118,23 +1084,18 @@ em {
         display: none !important;
     }
 
-    /* Hero */
-    .hero {
-        min-height: 100svh;
-        min-height: 100dvh;
-    }
+    /* HERO */
 
-    .hero-media video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover !important;
-        object-position: 58% center;
+    .hero {
+        min-height: 0;
+        height: auto;
+        padding: 100px 20px 64px;
     }
 
     .hero-center {
-        width: calc(100% - 32px);
+        width: 100%;
         max-width: 420px;
-        margin-top: 32px;
+        margin-top: 0;
     }
 
     .hero h1 {
@@ -1151,16 +1112,65 @@ em {
         width: 100%;
         max-width: 360px;
         margin-inline: auto;
+        display: flex;
         flex-direction: column;
         align-items: stretch;
     }
 
-    .hero-actions .btn {
+    .hero-actions .button {
         width: 100%;
         max-width: none;
     }
 
-    /* Collection */
+    .hero-media video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 58% center;
+    }
+
+    /* ESSÊNCIA / INTRO */
+
+    .intro {
+        min-height: 0;
+        padding: 30px 0 48px;
+    }
+
+    .intro-grid {
+        grid-template-columns: 1fr;
+        min-height: 0;
+        gap: 0;
+        padding: 30px 20px 0;
+    }
+
+    /*
+       A mídia da intro é decorativa (aria-hidden no HTML).
+       No mobile ela estava criando o grande bloco preto
+       entre o texto e a coleção.
+    */
+    .intro-media {
+        display: none;
+    }
+
+    .intro h2 {
+        max-width: 100%;
+        font-size: clamp(44px, 11vw, 64px);
+    }
+
+    .intro-copy {
+        max-width: 100%;
+    }
+
+    /* COLLECTION */
+
+    .collection {
+        padding: 32px 0 64px;
+    }
+
+    .collection-heading {
+        padding: 22px 16px 24px;
+    }
+
     .collection-grid {
         width: 100%;
         padding-inline: 16px;
@@ -1168,62 +1178,78 @@ em {
         gap: 16px;
     }
 
-    .collection-card {
+    .collection-card,
+    .collection-card--body {
         width: 100%;
         min-height: 0;
-        aspect-ratio: 1 / 1;
+        height: auto;
+        aspect-ratio: 4 / 5;
+        justify-self: stretch;
+        border-radius: 14px;
     }
 
-    .collection-card>video {
+    .collection-card>video,
+    .collection-card--body>video {
         width: 100%;
         height: 100%;
-        object-fit: cover !important;
+        object-fit: cover;
         object-position: center;
     }
 
-    .collection-card--women > video {
-        object-position: right center !important;
+    .collection-card--women>video {
+        object-position: right center;
     }
 
-    .collection-card--body {
-        width: 100%;
-        aspect-ratio: 1 / 1;
+    .card-copy {
+        left: 22px;
+        right: 22px;
+        bottom: 24px;
+        max-width: none;
     }
 
-    /* Intro media */
-    .intro-media,
-    .intro-media img,
-    .intro-media video {
-        width: 100%;
-        max-width: 100%;
+    .card-copy h3 {
+        font-size: clamp(34px, 10vw, 48px);
     }
 
-    .intro-media img,
-    .intro-media video {
-        height: auto;
-        object-fit: contain;
+    /* NOTES */
+
+    .notes {
+        padding: 36px 0 70px;
     }
 
-    /* Notes */
+    .notes-grid {
+        grid-template-columns: 1fr;
+        gap: 34px;
+        padding: 30px 20px 0;
+    }
+
+    .notes-copy h2 {
+        font-size: clamp(44px, 12vw, 64px);
+    }
+
     .notes-list {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
     }
 
-    /* Footer */
+    .note-card {
+        min-height: 250px;
+    }
+
+    /* FOOTER */
+
     .site-footer {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: flex-start;
         gap: 24px;
     }
 }
 
-/* ---------- SMALL MOBILE ---------- */
-
 @media (max-width: 480px) {
 
     .site-header {
-        height: auto;
-        min-height: 60px;
-        padding: 15px 14px;
+        height: 60px;
+        padding-inline: 14px;
     }
 
     .brand {
@@ -1231,26 +1257,28 @@ em {
         max-width: 132px;
     }
 
-    .container {
-        width: min(var(--container), calc(100% - 24px));
+    .hero {
+        padding: 92px 16px 56px;
     }
 
-    .hero-center {
-        width: calc(100% - 24px);
-        margin-top: 24px;
+    .intro {
+        padding-bottom: 38px;
     }
 
-    .hero h1 {
-        font-size: clamp(42px, 12vw, 58px);
+    .intro-grid {
+        padding: 26px 16px 0;
     }
 
-    .hero-lead {
-        font-size: 14px;
-        line-height: 1.5;
+    .intro h2 {
+        font-size: clamp(42px, 11vw, 58px);
     }
 
-    .hero-actions {
-        max-width: 100%;
+    .collection {
+        padding-top: 26px;
+    }
+
+    .collection-heading {
+        padding-inline: 12px;
     }
 
     .collection-grid {
@@ -1258,23 +1286,29 @@ em {
         gap: 14px;
     }
 
-    .collection-card {
-        border-radius: 14px;
+    .collection-card,
+    .collection-card--body {
+        aspect-ratio: 4 / 5;
+    }
+
+    .notes-grid {
+        padding-inline: 16px;
     }
 
     .notes-list {
-        gap: 18px 12px;
+        gap: 8px;
+    }
+
+    .note-card {
+        min-height: 220px;
     }
 }
-
-/* ---------- VERY SMALL MOBILE ---------- */
 
 @media (max-width: 380px) {
 
     .site-header {
-        height: auto;
-        min-height: 58px;
-        padding: 15px 12px;
+        height: 58px;
+        padding-inline: 12px;
     }
 
     .brand {
@@ -1282,23 +1316,31 @@ em {
         max-width: 126px;
     }
 
-    .hero-center {
-        width: calc(100% - 20px);
+    .hero {
+        padding: 88px 12px 50px;
     }
 
-    .hero h1 {
+    .intro {
+        padding-bottom: 32px;
+    }
+
+    .intro-grid {
+        padding-inline: 12px;
+    }
+
+    .intro h2 {
         font-size: 43px;
-    }
-
-    .hero-lead {
-        font-size: 13px;
     }
 
     .collection-grid {
         padding-inline: 10px;
     }
 
-    .notes-list {
-        gap: 16px 10px;
+    .notes-grid {
+        padding-inline: 14px;
+    }
+
+    .note-card {
+        min-height: 205px;
     }
 }
